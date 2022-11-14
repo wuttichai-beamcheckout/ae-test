@@ -1,0 +1,23 @@
+{
+  "name": "ae-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wuttichai-beamcheckout/ae-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wuttichai-beamcheckout/ae-test/issues"
+  },
+  "homepage": "https://github.com/wuttichai-beamcheckout/ae-test#readme",
+  "devDependencies": {
+    "cypress": "^11.0.1"
+  }
+}
