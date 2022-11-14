@@ -10,9 +10,9 @@ jobs:
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+
       - name: Cypress run
         uses: cypress-io/github-action@v4 # use the explicit version number
         with:
-          build: npm run build
-          start: npm start
+          start: npm run test
           browser: chrome
