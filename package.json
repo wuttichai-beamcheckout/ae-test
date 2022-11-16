@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cypress open"
+    "lint": "eslint .",
+    "test:abc": "cypress open --project ./src/abc",
+    "test:api": "cypress open --project ./src/api"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,18 @@
   },
   "homepage": "https://github.com/wuttichai-beamcheckout/ae-test#readme",
   "devDependencies": {
-    "cypress": "^11.0.1"
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "cypress": "^11.0.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^14.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+    "@types/node": "^18.11.9"
   }
 }
