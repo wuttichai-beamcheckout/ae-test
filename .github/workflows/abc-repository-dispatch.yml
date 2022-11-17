@@ -26,6 +26,7 @@ jobs:
           runTests: false
 
       - name: Run Cypress
+        id: cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
           TAGS: ${{ github.event.client_payload.tags }}
@@ -33,6 +34,16 @@ jobs:
           install: false
           browser: chrome
           working-directory: src/abc
+
+      - name: Print Dashboard URL
+        run: |
+          echo Cypress finished with: ${{ steps.cypress.outcome }}
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-report
+          path: src/abc/cucumber-report.html
 
       - name: Send Slack Notification
         uses: rtCamp/action-slack-notify@v2

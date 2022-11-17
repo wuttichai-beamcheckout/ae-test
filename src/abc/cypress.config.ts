@@ -24,7 +24,7 @@ async function setupNodeEvents(
 export default defineConfig({
   env: {
     URL: process.env.URL ?? 'https://www.duckduckgo.com',
-    TAGS: process.env.TAGS,
+    TAGS: 'not @skip',
   },
   e2e: {
     specPattern: '**/*.feature',
@@ -32,5 +32,9 @@ export default defineConfig({
     setupNodeEvents,
   },
   video: false,
-  screenshotOnRunFailure: false,
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'results/my-test-output.xml',
+    toConsole: true,
+  },
 })
