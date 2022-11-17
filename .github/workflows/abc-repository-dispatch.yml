@@ -24,3 +24,12 @@ jobs:
           install: false
           browser: chrome
           working-directory: src/abc
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: automated-tests
+          SLACK_MESSAGE: 'Hello from the other side :rocket:'
+          SLACK_TITLE: Hello Title
+          SLACK_USERNAME: Github Actions
