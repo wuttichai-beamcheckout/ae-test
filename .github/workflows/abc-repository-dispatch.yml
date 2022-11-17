@@ -11,6 +11,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Send Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: true
+          SLACK_CHANNEL: automated-tests
+          SLACK_TITLE: ABC Automated
+          SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test)'
+
       - name: Install dependencies
         uses: cypress-io/github-action@v4
         with:
@@ -25,7 +34,7 @@ jobs:
           browser: chrome
           working-directory: src/abc
 
-      - name: Slack Notification
+      - name: Send Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
