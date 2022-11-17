@@ -11,6 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Test
-        run: |
-          echo "ENV: ${{ github.event.client_payload.env }}"
+      - name: Cypress run
+        uses: cypress-io/github-action@v4 # use the explicit version number
+        with:
+          start: npm run test:ci:abc
+          browser: chrome
+          env:
+            TAGS: ${{ github.event.client_payload.tags }}"

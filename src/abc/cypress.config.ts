@@ -10,9 +10,6 @@ async function setupNodeEvents(
   // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
   await addCucumberPreprocessorPlugin(on, config)
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require('cypress-mochawesome-reporter/plugin')(on)
-
   on(
     'file:preprocessor',
     createBundler({
@@ -25,14 +22,15 @@ async function setupNodeEvents(
 }
 
 export default defineConfig({
+  env: {
+    URL: process.env.URL ?? 'https://www.duckduckgo.com',
+    TAGS: process.env.TAGS,
+  },
   e2e: {
     specPattern: '**/*.feature',
     supportFile: false,
     setupNodeEvents,
   },
   video: false,
-  reporter: 'junit',
-  reporterOptions: {
-    mochaFile: 'results/my-test-output.xml',
-  },
+  screenshotOnRunFailure: false,
 })

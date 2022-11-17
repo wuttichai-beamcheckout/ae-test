@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test:abc": "cypress open --project ./src/abc -e TAGS='@smoke'",
+    "test:abc": "cypress open --project ./src/abc",
     "test:abc:mobile": "cypress open --project ./src/abc MOBILE=true",
     "test:ci:abc": "cypress run --project ./src/abc",
     "test:api": "cypress open --project ./src/api",
