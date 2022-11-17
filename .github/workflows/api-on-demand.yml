@@ -46,14 +46,14 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: src/api/reports
+          path: src/api/cypress/reports
 
       - name: Save test results JSON
         if: always()
         id: total_tests
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: './src/api/reports/index.json'
+          path: './src/api/cypress/reports/index.json'
           prop_path: 'stats.tests'
 
       - run: echo ${{steps.total_tests.outputs.propStr}}
