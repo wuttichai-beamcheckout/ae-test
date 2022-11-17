@@ -13,8 +13,8 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v4 # use the explicit version number
+        env:
+          TAGS: ${{ github.event.client_payload.tags }}
         with:
           start: npm run test:ci:abc
           browser: chrome
-          env:
-            TAGS: ${{ github.event.client_payload.tags }}
