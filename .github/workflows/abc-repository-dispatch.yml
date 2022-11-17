@@ -2,7 +2,7 @@ name: On Demand Test ABC
 
 on:
   repository_dispatch:
-    types: [on-demand-test]
+    types: [abc-on-demand-test]
 
 jobs:
   cypress-run:
