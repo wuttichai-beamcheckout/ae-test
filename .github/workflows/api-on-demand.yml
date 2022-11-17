@@ -85,6 +85,28 @@ jobs:
           echo ${{ steps.cypress.summary }}
           echo "$GITHUB_STEP_SUMMARY"
 
+      - name: Save total failures
+        if: always()
+        id: test_results
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: './src/api/cypress/reports/html/index.json'
+          prop_path: 'stats'
+
+      - name: testestest
+        id: set_data
+        if: always()
+        run: |
+          echo ${{steps.test_results.outputs.prop}}
+          echo "TOTAL=${{steps.test_results.outputs.prop.tests}}" >> $GITHUB_OUTPUT
+          echo "PASSES=${{steps.test_results.outputs.prop.passes}}" >> $GITHUB_OUTPUT
+          echo "FAILURES=${{steps.test_results.outputs.prop.failures}}" >> $GITHUB_OUTPUT
+
+      - name: get
+        if: always()
+        run: |
+          echo ${{steps.set_data.outputs.TOTAL}}
+
       # - name: Send Slack Notification
       #   if: always()
       #   uses: rtCamp/action-slack-notify@v2
