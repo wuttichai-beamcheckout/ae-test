@@ -76,10 +76,6 @@ jobs:
 
       - run: echo ${{steps.total_failures.outputs.propStr}}
 
-      - run: echo ${{GITHUB_STEP_SUMMARY}}
-
-      - run: echo ${{steps.total_failures.outputs.propStr}}
-
       - run: echo See results at ${{ steps.cypress.outputs }}
 
       # - name: Send Slack Notification
