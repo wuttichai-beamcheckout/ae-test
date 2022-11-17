@@ -8,8 +8,11 @@
     "test:abc": "cypress open --project ./src/abc",
     "test:abc:mobile": "cypress open --project ./src/abc MOBILE=true",
     "test:ci:abc": "cypress run --project ./src/abc",
-    "test:api": "cypress open --project ./src/api",
-    "test:ci:api": "CYPRESS_INCLUDE_TAGS=SMOKE cypress run --project ./src/api"
+    "test:api": "CYPRESS_INCLUDE_TAGS=SMOKE cypress open --project ./src/api",
+    "test:ci:api": "cypress run --project ./src/api --env allure=true",
+    "generate:report": "mochawesome-merge ./src/api/results/*.json > ./src/api/report/output.json",
+    "generate:html": "marge ./src/api/report/output.json --reportDir ./src/api/report",
+    "allure:test": "allure generate allure-results --clean -o allure-report"
   },
   "repository": {
     "type": "git",
@@ -23,14 +26,21 @@
   },
   "homepage": "https://github.com/wuttichai-beamcheckout/ae-test#readme",
   "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.34.0",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "allure-commandline": "^2.20.1",
     "cypress": "^11.0.1",
     "cypress-cucumber-attach-screenshots-to-failed-steps": "^1.0.0",
+    "cypress-json-results": "^1.2.1",
     "cypress-mochawesome-reporter": "^3.2.3",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
+    "mocha-allure-reporter": "^1.4.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.2.0",
     "multiple-cucumber-html-reporter": "^3.0.1",
     "prettier": "^2.7.1",
     "typescript": "^4.9.3"
@@ -39,6 +49,8 @@
     "@badeball/cypress-cucumber-preprocessor": "^14.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
     "@types/node": "^18.11.9",
+    "cypress-multi-reporters": "^1.6.1",
+    "cypress-plugin-api": "^2.4.1",
     "cypress-tags": "^1.1.2"
   }
 }

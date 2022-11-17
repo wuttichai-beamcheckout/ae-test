@@ -1,0 +1,61 @@
+name: On Demand Test ABC
+
+on:
+  repository_dispatch:
+    types: [api-on-demand-test]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # - name: Send Slack Notification
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     MSG_MINIMAL: true
+      #     SLACK_CHANNEL: automated-tests
+      #     SLACK_TITLE: ABC Automated
+      #     SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test)'
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+
+      - name: Run Cypress
+        id: cypress
+        uses: cypress-io/github-action@v4 # use the explicit version number
+        env:
+          TAGS: ${{ github.event.client_payload.tags }}
+        with:
+          install: false
+          browser: chrome
+          headed: true
+          project: src/api
+
+      - name: Print Dashboard URL
+        if: always()
+        run: |
+          echo Cypress finished with: ${{ steps.cypress.outcome }}
+
+      # - name: Save test results
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: cucumber-report
+      #     path: src/abc/cucumber-report.html
+
+      # - name: Send Slack Notification
+      #   if: always()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_CHANNEL: automated-tests
+      #     SLACK_COLOR: ${{ job.status }}
+      #     SLACK_FOOTER: Beam
+      #     SLACK_TITLE: ABC automated-test results
+      #     SLACK_MESSAGE: |
+      #       Test results: ${{ steps.cypress.outcome }}

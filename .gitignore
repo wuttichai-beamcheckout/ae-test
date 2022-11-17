@@ -1,6 +1,7 @@
 node_modules
 src/**/screenshots
 src/**/results
+src/**/reports
 src/**/cucumber-messages.ndjson
 src/**/cucumber-report.html
 .DS_Store
