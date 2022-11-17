@@ -17,4 +17,4 @@ jobs:
           start: npm run test:ci:abc
           browser: chrome
           env:
-            TAGS: ${{ github.event.client_payload.tags }}"
+            TAGS: ${{ github.event.client_payload.tags }}
