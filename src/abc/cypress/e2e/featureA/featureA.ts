@@ -10,5 +10,4 @@ Then('I should see a search bar', () => {
     'placeholder',
     'Search the web without being tracked'
   )
-  cy.wait(10000)
 })

@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test:abc": "cypress open --project ./src/abc",
-    "test:api": "cypress open --project ./src/api"
+    "test:abc": "cypress open --project ./src/abc -e TAGS='@smoke'",
+    "test:abc:mobile": "cypress open --project ./src/abc MOBILE=true",
+    "test:ci:abc": "cypress run --project ./src/abc",
+    "test:api": "cypress open --project ./src/api",
+    "test:ci:api": "CYPRESS_INCLUDE_TAGS=SMOKE cypress run --project ./src/api"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "cypress": "^11.0.1",
+    "cypress-mochawesome-reporter": "^3.2.3",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
@@ -32,6 +36,7 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^14.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.9",
+    "cypress-tags": "^1.1.2"
   }
 }
