@@ -1,0 +1,16 @@
+name: On Demand Test ABC
+
+on:
+  repository_dispatch:
+    types: [on-demand-test]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: |
+          echo "ENV: ${{ github.event.client_payload.env }}"
