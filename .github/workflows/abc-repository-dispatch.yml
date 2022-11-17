@@ -11,11 +11,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cypress run
+      - name: Install dependencies
+        uses: cypress-io/github-action@v1
+        with:
+          # just perform install
+          runTests: false
+
+      - name: Run Cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
           TAGS: ${{ github.event.client_payload.tags }}
         with:
-          working-directory: src/abc
-          start: npm run test:ci:abc
+          install: false
           browser: chrome
+          working-directory: src/abc
