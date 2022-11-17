@@ -27,6 +27,7 @@ jobs:
 
       - name: Run Cypress
         id: cypress
+        continue-on-error: true
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
           TAGS: ${{ github.event.client_payload.tags }}
@@ -74,9 +75,13 @@ jobs:
           path: './src/api/cypress/reports/html/index.json'
           prop_path: 'stats.failures'
 
-      - run: echo ${{steps.total_failures.outputs.propStr}}
+      - name: really
+        if: always()
+        run: echo ${{steps.total_failures.outputs.propStr}}
 
-      - run: echo See results at ${{ steps.cypress.outputs }}
+      - name: yes
+        if: always()
+        run: echo See results at ${{ steps.cypress.outputs }}
 
       # - name: Send Slack Notification
       #   if: always()
