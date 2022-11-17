@@ -48,15 +48,33 @@ jobs:
           name: report
           path: src/api/cypress/reports
 
-      - name: Save test results JSON
+      - name: Save total tests
         if: always()
         id: total_tests
         uses: notiz-dev/github-action-json-property@release
         with:
-          path: './src/api/cypress/reports/index.json'
+          path: './src/api/cypress/reports/html/index.json'
           prop_path: 'stats.tests'
 
-      - run: echo ${{steps.total_tests.outputs.propStr}}
+      - name: Save total passes
+        if: always()
+        id: total_passes
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: './src/api/cypress/reports/html/index.json'
+          prop_path: 'stats.passes'
+
+      - run: echo ${{steps.total_passes.outputs.propStr}}
+
+      - name: Save total failures
+        if: always()
+        id: total_failures
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: './src/api/cypress/reports/html/index.json'
+          prop_path: 'stats.failures'
+
+      - run: echo ${{steps.total_failures.outputs.propStr}}
 
       # - name: Send Slack Notification
       #   if: always()
