@@ -81,7 +81,9 @@ jobs:
 
       - name: yes
         if: always()
-        run: echo See results at ${{ steps.cypress.outputs }}
+        run: |
+          echo ${{ steps.cypress.summary }}
+          echo "$GITHUB_STEP_SUMMARY"
 
       # - name: Send Slack Notification
       #   if: always()
