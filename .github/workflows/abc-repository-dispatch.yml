@@ -16,5 +16,6 @@ jobs:
         env:
           TAGS: ${{ github.event.client_payload.tags }}
         with:
+          working-directory: src/abc
           start: npm run test:ci:abc
           browser: chrome
