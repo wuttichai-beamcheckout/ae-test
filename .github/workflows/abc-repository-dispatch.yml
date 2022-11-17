@@ -12,9 +12,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v4
         with:
-          # just perform install
           runTests: false
 
       - name: Run Cypress
@@ -22,6 +21,5 @@ jobs:
         env:
           TAGS: ${{ github.event.client_payload.tags }}
         with:
-          install: false
           browser: chrome
           working-directory: src/abc
