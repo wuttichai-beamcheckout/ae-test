@@ -54,6 +54,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_CHANNEL: automated-tests
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE: 'Hello from the other side :rocket:'
-          SLACK_TITLE: Hello Title
-          SLACK_USERNAME: Github Actions
+          SLACK_FOOTER: Beam
+          SLACK_TITLE: ABC automated-test results
+          SLACK_MESSAGE: |
+            Test results: ${{ steps.cypress.outcome }}
