@@ -1,7 +1,7 @@
-import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import { When, Then, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 
 When('I visit duckduckgo.com', () => {
-  cy.visit('https://www.google.com')
+  cy.visit(Cypress.env('URL'))
 })
 
 Then('I should see a search bar', () => {
@@ -10,4 +10,10 @@ Then('I should see a search bar', () => {
     'placeholder',
     'Search the web without being tracked'
   )
+})
+
+Then('I type data in search bar', (datatable: DataTable) => {
+  datatable.hashes().forEach((x) => {
+    cy.get('input').first().type(x.email)
+  })
 })

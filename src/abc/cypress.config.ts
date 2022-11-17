@@ -32,9 +32,4 @@ export default defineConfig({
     setupNodeEvents,
   },
   video: false,
-  reporter: 'junit',
-  reporterOptions: {
-    mochaFile: 'results/my-test-output.xml',
-    toConsole: true,
-  },
 })

@@ -11,3 +11,7 @@ Then('I should see a search bar', () => {
     'Search the web without being tracked'
   )
 })
+
+Then(/I type (.*) in search bar/, (data: string) => {
+  cy.get('input').first().type(data)
+})
