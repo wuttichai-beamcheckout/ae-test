@@ -36,16 +36,19 @@ jobs:
           working-directory: src/abc
 
       - name: Print Dashboard URL
+        if: always()
         run: |
           echo Cypress finished with: ${{ steps.cypress.outcome }}
 
-      - name: Archive code coverage results
+      - name: Save test results
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cucumber-report
           path: src/abc/cucumber-report.html
 
       - name: Send Slack Notification
+        if: always()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

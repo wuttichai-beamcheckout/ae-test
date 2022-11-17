@@ -24,7 +24,7 @@ async function setupNodeEvents(
 export default defineConfig({
   env: {
     URL: process.env.URL ?? 'https://www.duckduckgo.com',
-    TAGS: 'not @skip',
+    TAGS: process.env.TAGS,
   },
   e2e: {
     specPattern: '**/*.feature',
