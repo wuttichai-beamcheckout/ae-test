@@ -65,8 +65,6 @@ jobs:
           path: './src/api/cypress/reports/html/index.json'
           prop_path: 'stats.passes'
 
-      - run: echo ${{steps.total_passes.outputs.propStr}}
-
       - name: Save total failures
         if: always()
         id: total_failures
@@ -85,36 +83,23 @@ jobs:
           echo ${{ steps.cypress.summary }}
           echo "$GITHUB_STEP_SUMMARY"
 
-      - name: Save total failures
-        if: always()
-        id: test_results
-        uses: notiz-dev/github-action-json-property@release
-        with:
-          path: './src/api/cypress/reports/html/index.json'
-          prop_path: 'stats'
-
-      - name: testestest
-        id: set_data
-        if: always()
-        run: |
-          echo ${{steps.test_results.outputs.prop}}
-          echo "TOTAL=${{steps.test_results.outputs.prop.tests}}" >> $GITHUB_OUTPUT
-          echo "PASSES=${{steps.test_results.outputs.prop.passes}}" >> $GITHUB_OUTPUT
-          echo "FAILURES=${{steps.test_results.outputs.prop.failures}}" >> $GITHUB_OUTPUT
-
       - name: get
         if: always()
         run: |
           echo ${{steps.set_data.outputs.TOTAL}}
 
-      # - name: Send Slack Notification
-      #   if: always()
-      #   uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #     SLACK_CHANNEL: automated-tests
-      #     SLACK_COLOR: ${{ job.status }}
-      #     SLACK_FOOTER: Beam
-      #     SLACK_TITLE: ABC automated-test results
-      #     SLACK_MESSAGE: |
-      #       Test results: ${{ steps.cypress.outcome }}
+      - name: Send Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: automated-tests
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_FOOTER: Beam
+          MSG_MINIMAL: actions url
+          SLACK_TITLE: API automated-test results
+          SLACK_MESSAGE: |
+            Test results: ${{ steps.cypress.outcome }}
+            Total Tests: ${{steps.total_tests.outputs.propStr}}
+            Passes: ${{steps.total_passes.outputs.propStr}}
+            Failures: ${{steps.total_failures.outputs.propStr}}

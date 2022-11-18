@@ -2,6 +2,8 @@ import { defineConfig } from 'cypress'
 import { tagify } from 'cypress-tags'
 // import allureWriter from '@shelex/cypress-allure-plugin/writer'
 
+// import { beforeRunHook, afterRunHook } from 'cypress-mochawesome-reporter/lib'
+
 export default defineConfig({
   env: {
     environment: 'dev',
@@ -15,6 +17,17 @@ export default defineConfig({
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('cypress-mochawesome-reporter/plugin')(on)
+
+      // on('before:run', async (details) => {
+      //   await beforeRunHook(details)
+      // })
+
+      // on('after:run', async (results) => {
+      //   console.log('---------')
+      //   console.log(results)
+      //   console.log('---------')
+      //   await afterRunHook()
+      // })
 
       // // eslint-disable-next-line @typescript-eslint/no-var-requires
       // require('cypress-json-results')({
