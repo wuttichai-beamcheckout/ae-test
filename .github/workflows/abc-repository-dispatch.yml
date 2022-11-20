@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        device: ['desktop']
+        device: ['desktop', 'mobile']
 
     steps:
       - name: Checkout
@@ -35,19 +35,11 @@ jobs:
         with:
           runTests: false
 
-      - name: Set up mobile env
-        uses: haya14busa/action-cond@v1
-        id: is_mobile
-        with:
-          cond: ${{ matrix.device == 'mobile' }}
-          if_true: 'true'
-          if_false: 'false'
-
       - name: Run Cypress
         id: cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
-          MOBILE: ${{ steps.is_mobile.outputs.value }}
+          MOBILE: ${{ matrix.device }}
           TAGS: ${{ github.event.client_payload.tags }}
         with:
           install: false
