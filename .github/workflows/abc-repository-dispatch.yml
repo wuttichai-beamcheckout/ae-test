@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        device: ['desktop', 'mobile']
+        device: ['desktop']
 
     steps:
       - name: Checkout
