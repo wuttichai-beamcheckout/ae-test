@@ -35,11 +35,19 @@ jobs:
         with:
           runTests: false
 
+      - name: Set up device
+        uses: haya14busa/action-cond@v1
+        id: device
+        with:
+          cond: ${{ matrix.device == 'mobile' }}
+          if_true: 'true'
+          if_false: 'false'
+
       - name: Run Cypress
         id: cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
-          MOBILE: ${{ matrix.device == 'mobile' }}
+          MOBILE: ${{ matrix.device == 'mobile' && 'true' || 'false' }}
           TAGS: ${{ github.event.client_payload.tags }}
         with:
           install: false
