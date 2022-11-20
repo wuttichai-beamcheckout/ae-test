@@ -33,4 +33,6 @@ export default defineConfig({
     setupNodeEvents,
   },
   video: false,
+  viewportHeight: process.env.MOBILE ? 667 : 800,
+  viewportWidth: process.env.MOBILE ? 375 : 1280,
 })

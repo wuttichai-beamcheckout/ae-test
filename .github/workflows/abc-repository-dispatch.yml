@@ -6,7 +6,7 @@ on:
 
 jobs:
   send-slack-notification:
-    runs-on: ubunt-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Send Slack Notification
