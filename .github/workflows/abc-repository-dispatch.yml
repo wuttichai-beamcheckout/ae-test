@@ -39,7 +39,7 @@ jobs:
         id: cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
-          MOBILE: ${{ matrix.device }}
+          DEVICE: ${{ matrix.device }}
           TAGS: ${{ github.event.client_payload.tags }}
         with:
           install: false
