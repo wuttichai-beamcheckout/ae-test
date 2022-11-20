@@ -5,7 +5,20 @@ on:
     types: [abc-on-demand-test]
 
 jobs:
-  cypress-run:
+  send-slack-notification:
+    runs-on: ubunt-latest
+
+    steps:
+      - name: Send Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: true
+          SLACK_CHANNEL: automated-tests
+          SLACK_TITLE: ABC Automated
+          SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test) ${{ matrix.device }}'
+
+  run-cypress:
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,15 +29,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Send Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          MSG_MINIMAL: true
-          SLACK_CHANNEL: automated-tests
-          SLACK_TITLE: ABC Automated
-          SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test) ${{ matrix.device }}'
 
       - name: Install dependencies
         uses: cypress-io/github-action@v4
@@ -42,26 +46,9 @@ jobs:
           browser: chrome
           working-directory: src/abc
 
-      # - name: Print Dashboard URL
-      #   if: always()
-      #   run: |
-      #     echo Cypress finished with: ${{ steps.cypress.outcome }}
-
-      # - name: Save test results
-      #   if: always()
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: cucumber-report
-      #     path: src/abc/cucumber-report.html
-
-      # - name: Send Slack Notification
-      #   if: always()
-      #   uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #     SLACK_CHANNEL: automated-tests
-      #     SLACK_COLOR: ${{ job.status }}
-      #     SLACK_FOOTER: Beam
-      #     SLACK_TITLE: ABC automated-test results
-      #     SLACK_MESSAGE: |
-      #       Test results: ${{ steps.cypress.outcome }}
+      - name: Save test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-report-${{ matrix.device }}
+          path: src/abc/cucumber-report.html
