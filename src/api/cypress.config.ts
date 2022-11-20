@@ -41,6 +41,8 @@ export default defineConfig({
   reporterOptions: {
     saveJson: true,
   },
+  viewportHeight: process.env.MOBILE ? 667 : 800,
+  viewportWidth: process.env.MOBILE ? 375 : 1280,
   // reporter: '../../node_modules/mochawesome',
   // reporterOptions: {
   //   overwrite: false,

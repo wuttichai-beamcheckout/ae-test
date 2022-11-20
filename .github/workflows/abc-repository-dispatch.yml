@@ -11,6 +11,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      strategy:
+        fail-fast: false
+        matrix:
+          device: ["desktop", "mobile"]
+
       - name: Send Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
@@ -18,7 +23,7 @@ jobs:
           MSG_MINIMAL: true
           SLACK_CHANNEL: automated-tests
           SLACK_TITLE: ABC Automated
-          SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test)'
+          SLACK_MESSAGE: 'Start running ABC automated tests (on-demand-test) ${{ matrix.device }}'
 
       - name: Install dependencies
         uses: cypress-io/github-action@v4
@@ -29,32 +34,33 @@ jobs:
         id: cypress
         uses: cypress-io/github-action@v4 # use the explicit version number
         env:
+          MOBILE: ${{ matrix.device == 'mobile' }}
           TAGS: ${{ github.event.client_payload.tags }}
         with:
           install: false
           browser: chrome
           working-directory: src/abc
 
-      - name: Print Dashboard URL
-        if: always()
-        run: |
-          echo Cypress finished with: ${{ steps.cypress.outcome }}
+      # - name: Print Dashboard URL
+      #   if: always()
+      #   run: |
+      #     echo Cypress finished with: ${{ steps.cypress.outcome }}
 
-      - name: Save test results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: cucumber-report
-          path: src/abc/cucumber-report.html
+      # - name: Save test results
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: cucumber-report
+      #     path: src/abc/cucumber-report.html
 
-      - name: Send Slack Notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: automated-tests
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_FOOTER: Beam
-          SLACK_TITLE: ABC automated-test results
-          SLACK_MESSAGE: |
-            Test results: ${{ steps.cypress.outcome }}
+      # - name: Send Slack Notification
+      #   if: always()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_CHANNEL: automated-tests
+      #     SLACK_COLOR: ${{ job.status }}
+      #     SLACK_FOOTER: Beam
+      #     SLACK_TITLE: ABC automated-test results
+      #     SLACK_MESSAGE: |
+      #       Test results: ${{ steps.cypress.outcome }}
