@@ -7,14 +7,15 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
 
-      strategy:
-        fail-fast: false
-        matrix:
-          device: ["desktop", "mobile"]
+    strategy:
+      fail-fast: false
+      matrix:
+        device: ['desktop', 'mobile']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Send Slack Notification
         uses: rtCamp/action-slack-notify@v2
